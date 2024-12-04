@@ -1,4 +1,3 @@
-// import './App.css'
 import { Outlet } from 'react-router-dom';
 import {
   ApolloClient,
@@ -7,6 +6,11 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+import { useState, useEffect } from 'react';
+
+import Auth from './utils/auth'
+
+import TopNav from './components/topNav';
 
 // Construct the GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -33,9 +37,19 @@ const client = new ApolloClient({
 });
 
 function App() {
+  const [profile, setProfile] = useState({username: '', email: '', _id: ''})
+
+  useEffect(() => {
+    if (Auth.loggedIn()) {
+      const payload = Auth.getProfile();
+      setProfile(payload?.data);
+    }
+  }, []);
+  
   return (
     <ApolloProvider client={client}>
-      <Outlet />
+      <TopNav profile={profile} setProfile={setProfile} />
+      <Outlet context={{profile, setProfile}} />
     </ApolloProvider>
   );
 }

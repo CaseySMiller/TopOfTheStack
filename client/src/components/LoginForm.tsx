@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useOutletContext } from 'react-router-dom';
 
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
@@ -9,6 +9,7 @@ import Auth from '../utils/auth';
 
 
 const LoginForm = () => {
+  const { setProfile } = useOutletContext<{setProfile: any}>();
   const [userFormData, setUserFormData] = useState({ email: '', password: '' });
   const [toDashboard, setToDashboard] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
@@ -47,7 +48,8 @@ const LoginForm = () => {
       });
 
       Auth.login(data.login.token);
-
+      const newProfile = Auth.getProfile().data
+      setProfile(newProfile);
       setToDashboard(true);
       
     } catch (e) {

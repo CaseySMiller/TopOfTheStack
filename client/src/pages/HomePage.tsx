@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { Button } from '@/components/ui/button'
 
 const HomePage = () => {
   return (
@@ -8,19 +9,13 @@ const HomePage = () => {
       </h1>
       <div className='flex items-center justify-center'>
         <Link to="/login">
-          <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4'>
-            Login
-          </button>
+          <Button className='w-32 text-center'>Log In</Button>
         </Link>
         <Link to="/signup">
-          <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-4'>
-            Sign Up
-          </button>
+        <Button className='ml-4 w-32 text-center'>Sign Up</Button>
         </Link>
         <Link to="/dashboard">
-          <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-4'>
-            Dashboard
-          </button>
+          <Button className='ml-4 w-32 text-center'>Dashboard</Button>
         </Link>
       </div>
     </div>

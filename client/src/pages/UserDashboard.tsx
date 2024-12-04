@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom'
-import { useState, useEffect } from 'react';
+import { Link, useOutletContext } from 'react-router-dom'
+// import { useState, useEffect } from 'react';
 
 import type { User } from '../models/User';
 import Auth from '../utils/auth';
@@ -9,8 +9,19 @@ import { QUERY_ME } from '../utils/queries';
 
 
 const UserDashboard = () => {
+  const { setProfile } = useOutletContext<{setProfile: any}>();
   const { loading, data } = useQuery(QUERY_ME);
   const user: User = data?.me || {};
+
+  // if (context?.profile) {
+  //   console.log(context?.profile);
+  // }
+
+  
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   const handleLogout = async () => {
     // get token
@@ -22,6 +33,7 @@ const UserDashboard = () => {
 
     try {
       await Auth.logout();
+      setProfile({username: '', email: '', _id: ''});
     } catch (err) {
       console.error(err);
     }
